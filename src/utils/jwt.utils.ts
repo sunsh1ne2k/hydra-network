@@ -4,7 +4,7 @@ import 'dotenv/config';
 
 const publicKey = config.get<string>('jwtPublicKey');
 const privateKey = config.get<string>('jwtPrivateKey');
-console.log(`pbk: ${publicKey} \npvk: ${privateKey}`);
+// console.log(`pbk: ${publicKey} \npvk: ${privateKey}`);
 // const publicKey = process.env.JWT_ACCESS_TOKEN_PUBLIC_KEY;
 // const privateKey = process.env.JWT_ACCESS_TOKEN_SECRET_KEY;
 
