@@ -1,0 +1,35 @@
+import { omit } from 'lodash';
+import { DocumentDefinition } from 'mongoose';
+import UserModel, { UserDocument } from '../models/user.model';
+
+export async function createUser(
+    input: DocumentDefinition<
+        Omit<UserDocument, 'created_at' | 'updated_at' | 'comparePassword'>
+    >
+) {
+    try {
+        const user = await UserModel.create(input);
+
+        return omit(user.toJSON(), 'password');
+    } catch (err: any) {
+        throw new Error(err);
+    }
+}
+
+export async function validatePassword({
+    email,
+    password,
+}: {
+    email: string;
+    password: string;
+}) {
+    const user = await UserModel.findOne({ email });
+
+    if (!user) return false;
+
+    const isValidPassword = await user.comparePassword(password);
+
+    if (!isValidPassword) return false;
+
+    return omit(user.toJSON(), 'password');
+}
